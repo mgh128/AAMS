@@ -1,0 +1,327 @@
+<html>
+<head>
+<script src="vue.min.js"></script>
+<script src="axios.min.js"></script>
+
+<style type="text/css" rel="stylesheet">
+	body {	font-family: "Verdana","Geneva", sans-serif; }
+
+	 	.freeze-table {
+	 		padding: 0;
+	 		border-spacing:0;
+	 		border: 1px solid #ccc;
+	 	}
+	 	
+	 	th, td {
+	 		padding: 0;
+	 		outline: 1px solid #ccc;
+	 		border: none;
+	 		outline-offset: -1px;
+	 		padding-left: 5px;
+	 	}
+
+		thead  {
+			top: 0;
+			position: sticky;
+			z-index: 20;
+			padding: 2px;
+			background-color: #fff;
+		}
+		.col-id {
+			left: 0;
+			position: sticky;
+			z-index: 2;
+			background-color: #fff;
+		}
+		
+		tbody td {
+			z-index: 1;
+			padding: 2px;
+		}
+		
+		.fixed-header {
+			z-index: 50;
+		}
+
+		.fixed-left {
+			z-index: 50;
+			position: sticky;
+			left: 0;
+		}
+		
+		td.col-id {
+			font-weight: 700;
+		}
+
+
+	th {text-align: center;}
+	td {text-align: center;}
+	.left {float: left; margin-right: 8em;}
+	.right {float: left;}
+	
+</style>
+
+</head>
+
+<body>
+
+<h1>Display Barcode Syntax Resource data from JSON file</h1>
+
+<div id="app1">
+	<table class="freeze-table" v-if="showMainTable">
+		<thead>
+			<tr><th colspan="13" class="fixed-header col-id"><span class="left">Search by AI:&nbsp;<input type="text" v-model="selectedAI">&nbsp;<input type="button" value="Clear / Show all" @click="clearSelectedAI()"></span><span class="right">Search by keyword:&nbsp;<input type="text" v-model="searchKeyword">&nbsp;<input type="button" value="Clear" @click="clearKeyword()"></span></th></tr>
+			<tr><th colspan="13">&nbsp;</th></tr>
+			<tr>
+				<th class="fixed-header col-id">AI</th>
+				<th>title<br/>&nbsp;</th>
+				<th>description<br/>&nbsp;</th>
+				<th>FNC1 Required<br/><select v-model="isSeparatorRequired"><option v-for="b in booleanOptions" :value="b">{{b}}</option></select></th>
+				<th>Is a GS1 Digital Link Primary Key<br/><select v-model="isGS1DigitalLinkPrimaryKey"><option v-for="b in booleanOptions" :value="b">{{b}}</option></select></th>
+				<th>GS1 Digital Link Qualifiers<br/>&nbsp;</th>
+				<th>mandatory AI pairing<br/>&nbsp;</th>
+				<th>invalid AI pairing<br/>&nbsp;</th>
+				<th>Regex<br/>&nbsp;</th>
+				<th>Note<br/>&nbsp;</th>
+				<th v-for="c in components.length">Component {{c}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="e in filteredResults" @click="displayDetails(e.applicationIdentifier)">
+				<td class="col-id">{{e.applicationIdentifier}}</td>
+				<td>{{e.title}}</td>
+				<td>{{e.description}}</td>
+				<td>{{e.separatorRequired}}</td>
+				<td>{{e.gs1DigitalLinkPrimaryKey}}</td>
+				<td>{{e.gs1DigitalLinkQualifiers}}</td>
+				<td><span v-html="reformatRanges(e.requires)"></span></td>
+				<td><span v-html="reformatRanges(e.excludes)"></span></td>
+				<td>{{e.regex}}</td>
+				<td>{{e.note}}</td>
+				<td v-for="c in components.length" style="vertical-align: top;">
+					<table v-if="(e.components[c-1] !== undefined)" style="width: 100%;">
+						<tr v-for="k in Object.keys(e.components[c-1])">
+							<td>{{k}}</td><td>{{e.components[c-1][k]}}</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<input type="button" :value="showDetailsLabel" @click="displayDetails(selectedAI)" v-if="(selectedAI !== '' && (!showDetailsAsVerticalTable))">
+
+
+	<div v-if="showDetailsAsVerticalTable">
+		<hr/>
+		<table>
+			<tr v-for="e in filteredRow"><td colspan="2">AI</td><td>{{e.applicationIdentifier}}</td></tr>
+			<tr v-for="e in filteredRow"><td colspan="2">Title</td><td>{{e.title}}</td></tr>
+			<tr v-for="e in filteredRow"><td colspan="2">Description</td><td>{{e.description}}</td></tr>
+			<tr v-for="e in filteredRow"><td colspan="2">FNC1 required</td><td>{{e.separatorRequired}}</td></tr>
+			<tr v-for="e in filteredRow"><td colspan="2">GS1 Digital Link primary key?</td><td>{{e.gs1DigitalLinkPrimaryKey}}</td></tr>
+			<tr v-for="e in filteredRow"><td colspan="2">GS1 Digital Link qualifiers</td><td>{{e.gs1DigitalLinkQualifiers}}</td></tr>
+			<tr v-for="e in filteredRow"><td colspan="2">Mandatory associations</td><td><span v-html="reformatRanges(e.requires)"></span></td></tr>
+			<tr v-for="e in filteredRow"><td colspan="2">Invalid associations</td><td><span v-html="reformatRanges(e.excludes)"></span></td></tr>
+			<tr v-for="e in filteredRow"><td colspan="2">Regex</td><td>{{e.regex}}</td></tr>
+			<tr v-for="e in filteredRow"><td colspan="2">Note</td><td>{{e.note}}</td></tr>
+		</table>
+		<p>Components:</p>
+		<table v-for="e in filteredRow">
+			<tr v-for="c in e.components.length"><td>Component {{c}}</td><td><table><tr v-for="k in Object.keys(e.components[c-1])"><td>{{k}}</td><td>{{e.components[c-1][k]}}</td></tr></table></td></tr>
+		</table>
+		<hr/>
+		<input type="button" value="Return to main table" @click="hideDetails"/>
+	</div>
+
+	
+</div>
+
+
+<script language="javascript">
+
+function loadAIdata(file) {
+			axios({
+				method: 'get',
+				url: file
+			})
+			.then(function (response) {
+				app.bsr=response.data;
+			})
+			.catch(function (response) {
+				//handle error
+				console.log(response);
+			});
+
+}
+
+
+function byKeyword(keyword) {
+    return function(element) {
+        return (element.title.toLowerCase().indexOf(keyword.toLowerCase()) > -1) || (element.description.toLowerCase().indexOf(keyword.toLowerCase()) > -1);
+    }
+}
+
+
+
+function byIsGS1DLprimaryKey(b) {
+	return function(element) {
+		if (b == "true") {
+			return element.gs1DigitalLinkPrimaryKey;
+		}
+		if (b == "false") {
+			return !(element.hasOwnProperty("gs1DigitalLinkPrimaryKey"));
+		}
+	}
+}
+
+
+
+function byIsSeparatorRequired(b) {
+	return function(element) {
+		if (b == "true") {
+			return element.separatorRequired;
+		}
+		if (b == "false") {
+			return !(element.separatorRequired);
+		}
+	}
+}
+
+
+let booleanOptions=["","true","false"];
+
+let components=[0,1,2,3,4];
+
+let app=Vue.createApp({
+  data() {
+    return {
+		"bsr":[],
+		"selectedAI":"",
+		"searchKeyword":"",
+		"isSeparatorRequired":"",
+		"isGS1DigitalLinkPrimaryKey":"",
+		"showDetailsAsVerticalTable": false,
+		"showMainTable":true,
+		"booleanOptions": booleanOptions,
+		"components": components
+	}
+  },	
+  methods : {
+  	"displayDetails" : function(e) {
+  		this.selectedAI = e;
+  		this.showDetailsAsVerticalTable = true;
+  		this.showMainTable = false;
+  	},
+
+  	"hideDetails" : function(e) {
+  		this.selectedAI = "";
+  		this.showDetailsAsVerticalTable = false;
+  		this.showMainTable = true;
+  	},
+  
+  	"clearSelectedAI" : function() {
+  		this.selectedAI="";
+  		this.showDetailsAsVerticalTable = false;
+  	},
+  	"clearKeyword" : function() {
+  		this.searchKeyword="";
+  	},
+  	"reformatRanges" : function(array) {
+  		let rv=[];
+  		if (array !== undefined) {
+			for (let i=0; i<array.length; i++) {
+				if (typeof array[i] === 'object') {
+					rv.push('('+array[i].start+')&#8209;('+array[i].end+')');
+				} else {
+					rv.push('('+array[i]+')');
+				}
+			}
+  		}
+  		if (rv.length > 0) {
+  			return rv.join(", ");
+  		} else {
+  			return "";
+  		}
+  	}
+  },
+  mounted() {
+  	loadAIdata("aiDataMerged-sanitised.json");
+  },
+  computed : {
+    "showDetailsLabel" : function() {
+    	return "Show details for AI ("+this.selectedAI+")";
+    },
+  	"expandedBSR": function() {
+  		let rv=[];
+  		for (let i=0; i<this.bsr.length; i++) {
+  			if (this.bsr[i].applicationIdentifier.hasOwnProperty('start')) {
+				let s=this.bsr[i].applicationIdentifier.start;
+				let e=this.bsr[i].applicationIdentifier.end;
+				for (let j=s; j<=e; j++) {
+					let t=JSON.parse(JSON.stringify(this.bsr[i]));
+					t.applicationIdentifier=j;
+					rv.push(t);
+				}
+			} else {
+	  			rv.push(this.bsr[i]);		
+  			}
+  		}
+  		return rv;
+  	},
+  	"aiMap": function() {
+  		let rv={};
+  		for (let i=0; i< this.expandedBSR.length; i++) {
+  			rv[this.expandedBSR[i].applicationIdentifier]=this.expandedBSR[i];
+  		}
+  		return rv;
+  	},
+  	"filteredRow": function() {
+  		if (Object.keys(this.aiMap).includes(this.selectedAI)) {
+  			let rv=[];
+  			rv.push(this.aiMap[this.selectedAI]);
+  			return rv;
+  		} else {
+  			return [];
+  		}
+  	},
+  	"filteredByKeyword": function() {
+  		if (this.searchKeyword !== '') {
+  			return this.expandedBSR.filter(byKeyword(this.searchKeyword));
+  		} else {
+  			return [];
+  		}
+  	},
+  	"filteredExpandedBSR": function() {
+  		rv=this.expandedBSR;
+  		
+  		if (this.isGS1DigitalLinkPrimaryKey !== '') {
+  			rv=rv.filter(byIsGS1DLprimaryKey(this.isGS1DigitalLinkPrimaryKey));
+  		}
+
+  		if (this.isSeparatorRequired !== '') {
+  			rv=rv.filter(byIsSeparatorRequired(this.isSeparatorRequired));
+  		}
+
+  		return rv;
+  	},
+  	"filteredResults" : function() {
+  		if (((this.selectedAI=='') && (this.searchKeyword==''))) {
+  			return this.filteredExpandedBSR;
+  		}
+  		if (((this.selectedAI!=='') && (this.searchKeyword==''))) {
+  			return this.filteredRow;
+  		}
+  		if (((this.selectedAI=='') && (this.searchKeyword!==''))) {
+  			return this.filteredByKeyword;
+  		}
+  	
+  	}
+  	
+  }
+}).mount("#app1");
+
+</script>
+
+</body>
+</html>

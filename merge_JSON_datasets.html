@@ -1,0 +1,208 @@
+<html>
+<head>
+<script src="vue.min.js"></script>
+<script src="axios.min.js"></script>
+<title>Merge JSON datasets (BSR, AI browser)</title>
+<style type="text/css" rel="stylesheet">
+	body {	 		font-family: "Verdana","Geneva", sans-serif; }
+
+	 	.freeze-table {
+	 		padding: 0;
+	 		border-spacing:0;
+	 		border: 1px solid #ccc;
+	 	}
+	 	
+	 	th, td {
+	 		padding: 0;
+	 		outline: 1px solid #ccc;
+	 		border: none;
+	 		outline-offset: -1px;
+	 		padding-left: 5px;
+	 	}
+
+		thead  {
+			top: 0;
+			position: sticky;
+			z-index: 20;
+			padding: 2px;
+			background-color: #fff;
+		}
+		.col-id {
+			left: 0;
+			position: sticky;
+			z-index: 2;
+			background-color: #fff;
+		}
+		
+		tbody td {
+			z-index: 1;
+			padding: 2px;
+		}
+		
+		.fixed-header {
+			z-index: 50;
+		}
+
+		.fixed-left {
+			z-index: 50;
+			position: sticky;
+			left: 0;
+		}
+		
+
+
+	th {text-align: center;}
+	td {text-align: center;}
+	.left {float: left; margin-right: 8em;}
+	.right {float: left;}
+	
+</style>
+
+</head>
+
+<body>
+
+<h1>Merge JSON datasets (BSR, AI browser)</h1>
+
+<div id="app1">
+	<p>AIdata has {{aiData.length}} entries</p>
+	<p>BSRdata has {{bsrData.length}} entries</p>
+<hr/>
+	<textarea v-model="mergedDataAsJSON" style="width: 100%; height: 500px;">
+	</textarea>
+	<input type="button" value="Copy to clipboard" @click="copyJSON">
+</div>
+
+
+<script language="javascript">
+
+function loadAI(file,dest) {
+			axios({
+				method: 'get',
+				url: file
+			})
+			.then(function (response) {
+				app[dest]=response.data;
+			})
+			.catch(function (response) {
+				//handle error
+				console.log(response);
+			});
+
+}
+
+function dequote(val) {
+	return val.replace(/^"/,"").replace(/"$/,"");
+}
+
+function toBoolean(tf) {
+	if (tf == "TRUE") {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+let app=Vue.createApp({
+  data() {
+    return {
+		"aiData":"",
+		"bsrData":"",
+	}
+  },	
+  methods : {
+    "copyJSON":function() {
+    	navigator.clipboard.writeText(this.mergedDataAsJSON);
+    },
+  },
+  mounted() {
+  	loadAI("aiBrowserData.json","aiData");
+  	loadAI("gs1-syntax-dictionary-2023-04-30.json","bsrData");
+  },
+  computed : {
+  	"mergedDataAsJSON" : function() {
+  		rv=[];	
+  		for (let i=0; i<=this.aiData.length; i++) {
+  			let o=this.aiData[i];
+
+  			for (let j=0; j<=this.bsrData.length; j++) {
+  				b=this.bsrData[j];
+  				if ((b !== undefined) && (b.hasOwnProperty("applicationIdentifier")) && (o !== undefined) && (o.hasOwnProperty("applicationIdentifier"))) {
+					if (b.applicationIdentifier == o.applicationIdentifier) {
+						o.title=b.title;
+						o.separatorRequired = b.separatorRequired;
+						o.components = b.components;
+						if (b.hasOwnProperty("gs1DigitalLinkPrimaryKey")) {
+							o.gs1DigitalLinkPrimaryKey = b.gs1DigitalLinkPrimaryKey;  					
+						}
+
+						if (b.hasOwnProperty("gs1DigitalLinkQualifiers")) {
+							o.gs1DigitalLinkQualifiers = b.gs1DigitalLinkQualifiers;  					
+						}
+
+						if (b.hasOwnProperty("requires")) {
+							o.requires = b.requires;  					
+						}
+
+						if (b.hasOwnProperty("excludes")) {
+							o.excludes = b.excludes;  					
+						}
+
+						if (b.hasOwnProperty("components")) {
+							o.components = b.components;  					
+						}
+
+					}  				
+  				}
+
+  				if ((b !== undefined) && (b.hasOwnProperty("applicationIdentifier")) && (o !== undefined) && (o.hasOwnProperty("applicationIdentifier"))) {
+					if ((b.applicationIdentifier.hasOwnProperty("start")) && (b.applicationIdentifier.hasOwnProperty("end"))) {
+						if ((o.applicationIdentifier >= b.applicationIdentifier.start) && (o.applicationIdentifier <= b.applicationIdentifier.end)) {
+							o.start=b.applicationIdentifier.start;
+							o.end=b.applicationIdentifier.end;
+							o.title=b.title;
+							o.separatorRequired = b.separatorRequired;
+							o.components = b.components;
+							if (b.hasOwnProperty("gs1DigitalLinkPrimaryKey")) {
+								o.gs1DigitalLinkPrimaryKey = b.gs1DigitalLinkPrimaryKey;  					
+							}
+
+							if (b.hasOwnProperty("gs1DigitalLinkQualifiers")) {
+								o.gs1DigitalLinkQualifiers = b.gs1DigitalLinkQualifiers;  					
+							}
+
+							if (b.hasOwnProperty("requires")) {
+								o.requires = b.requires;  					
+							}
+
+							if (b.hasOwnProperty("excludes")) {
+								o.excludes = b.excludes;  					
+							}
+
+							if (b.hasOwnProperty("components")) {
+								o.components = b.components;  					
+							}
+
+
+						}  				
+					}
+
+  				}
+  				
+  				
+  			}
+			if ((o !== undefined) && (o.hasOwnProperty("applicationIdentifier"))) {
+				rv.push(o);			
+			}
+  		}
+  		return JSON.stringify(rv,null,2);
+  	},
+  
+  }
+}).mount("#app1");
+
+</script>
+
+</body>
+</html>

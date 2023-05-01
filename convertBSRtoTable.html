@@ -1,0 +1,545 @@
+<html>
+<head>
+<title>Multi-format BSR</title>
+<script src="vue.min.js"></script>
+<script src="axios.min.js"></script>
+<script language="javascript">
+const bsrSource="https://ref.gs1.org/tools/gs1-barcode-syntax-resource/syntax-dictionary/";
+</script>
+<style type="text/css" rel="stylesheet">
+	body {	font-family: "Verdana","Geneva", sans-serif; }
+
+	 	.freeze-table {
+	 		padding: 0;
+	 		border-spacing:0;
+	 		border: 1px solid #ccc;
+	 	}
+	 	
+	 	th, td {
+	 		padding: 0;
+	 		outline: 1px solid #ccc;
+	 		border: none;
+	 		outline-offset: -1px;
+	 		padding-left: 5px;
+	 	}
+
+		thead  {
+			top: 0;
+			position: sticky;
+			z-index: 20;
+			padding: 2px;
+			background-color: #fff;
+		}
+		.col-id {
+			left: 0;
+			position: sticky;
+			z-index: 2;
+			background-color: #fff;
+		}
+		
+		tbody td {
+			z-index: 1;
+			padding: 2px;
+		}
+		
+		.fixed-header {
+			z-index: 50;
+		}
+
+		.fixed-left {
+			z-index: 50;
+			position: sticky;
+			left: 0;
+		}
+		
+		td.col-id {
+			font-weight: 700;
+		}
+
+
+	th {text-align: center;}
+	td {text-align: center;}
+	.left {float: left; margin-right: 8em;}
+	.right {float: left;}
+
+	.hoverable:hover {background-color: #D9FFFF;}
+	
+	thead.headerCol tr th {
+			background-color: #000066;
+			color: #FFFFFF;
+			font-weight: 700;
+	}
+	
+	
+</style>
+
+</head>
+
+<body>
+
+<h1>Convert Barcode Syntax Resource (BSR)<br/>to human-readable table or JSON file</h1>
+
+<div id="app1">	
+	<p>Output format: <select v-model="outputFormat">
+		<option value="table">Human-readable table</option>
+		<option value="json">JSON data</option>
+		<option value="raw">BSR as Raw Text</option>
+		<option value="rawData">BSR as Raw Text - data rows only (no comments)</option>
+	</select>&nbsp;<span v-if="outputFormat !== 'raw'">derived</span> from source at <a :href="bsrSource" target="_blank">{{bsrSource}}</a></p>
+	
+	<table v-if="(outputFormat == 'table') || (outputFormat == 'both')">
+		<thead class="headerCol">
+			<tr>
+				<th>AI</th>
+				<th>FNC1 required</th>
+				<th>Title</th>
+				<th>GS1 Digital Link primary key</th>
+				<th>GS1 Digital Link qualifiers</th>
+				<th>Mandatory associations</th>
+				<th>Invalid pairings</th>
+				<th>Components as JSON</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="r in bsrDataLines" class="hoverable">
+				<td>{{columns(r)[0]}}</td>
+				<td>{{fnc1Required(columns(r))}}</td>
+				<td>{{title(columns(r))}}</td>
+				<td>{{dlpkey(columns(r))}}</td>
+				<td><span v-if="qualifiers(columns(r)).length>0">{{JSON.stringify(qualifiers(columns(r)),null,2)}}</span></td>
+				<td>{{requires(columns(r))}}</td>
+				<td>{{excludes(columns(r))}}</td>
+				<td>{{JSON.stringify(componentAsJSON(component(columns(r))),null,2)}}</td>
+			</tr>
+		</tbody>
+	</table>
+
+<textarea v-model="bsrAsJSON" style="width: 100%; height: 500px;" v-if="(outputFormat == 'json') || (outputFormat == 'both')">
+</textarea>
+
+<input type="button" value="Copy to clipboard" @click="copyJSON" v-if="(outputFormat == 'json') || (outputFormat == 'both')">
+
+<textarea v-model="bsr" style="width: 100%; height: 500px;" v-if="(outputFormat == 'raw')">
+</textarea>
+<input type="button" value="Copy to clipboard" @click="copyRaw" v-if="(outputFormat == 'raw')">
+
+<textarea v-html="bsrDataLines.join('\n')" style="width: 100%; height: 500px;" v-if="(outputFormat == 'rawData')">
+</textarea>
+<input type="button" value="Copy to clipboard" @click="copyRawData" v-if="(outputFormat == 'rawData')">
+
+	
+</div>
+
+
+<script language="javascript">
+
+function loadAIdata(file) {
+			axios({
+				method: 'get',
+				url: file
+			})
+			.then(function (response) {
+				app.bsr=response.data;
+			})
+			.catch(function (response) {
+				//handle error
+				console.log(response);
+			});
+
+}
+
+
+function byKeyword(keyword) {
+    return function(element) {
+        return (element.title.toLowerCase().indexOf(keyword.toLowerCase()) > -1) || (element.description.toLowerCase().indexOf(keyword.toLowerCase()) > -1);
+    }
+}
+
+
+
+function byIsGS1DLprimaryKey(b) {
+	return function(element) {
+		if (b == "true") {
+			return element.gs1DigitalLinkPrimaryKey;
+		}
+		if (b == "false") {
+			return !(element.hasOwnProperty("gs1DigitalLinkPrimaryKey"));
+		}
+	}
+}
+
+
+
+function byIsSeparatorRequired(b) {
+	return function(element) {
+		if (b == "true") {
+			return element.separatorRequired;
+		}
+		if (b == "false") {
+			return !(element.separatorRequired);
+		}
+	}
+}
+
+function removeSpacesFromArray(a) {
+	let rv=[];
+	let re=/^(\S+)$/;
+	for (let i=0; i<=a.length; i++) {
+		if ((re.test(a[i])) && (a[i]!== undefined)) {
+			rv.push(a[i]);
+		}
+	}
+	return rv;
+}
+
+function splitPipeThenComma(str) {
+	let rv=[];
+	let a=str.split("|");
+	for (let i=0; i<a.length; i++) {
+		if (a[i] !== "") {
+			rv.push(a[i].split(","));		
+		}
+	}
+	return rv;
+}
+
+
+let booleanOptions=["","true","false"];
+
+let components=[0,1,2,3,4];
+
+let app=Vue.createApp({
+  data() {
+    return {
+    	"bsrSource":bsrSource,
+		"bsr":"",
+		"selectedAI":"",
+		"outputFormat": "table",
+		"searchKeyword":"",
+		"isSeparatorRequired":"",
+		"isGS1DigitalLinkPrimaryKey":"",
+		"showDetailsAsVerticalTable": false,
+		"showMainTable":true,
+		"booleanOptions": booleanOptions,
+		"components": components
+	}
+  },	
+  methods : {
+    "copyJSON":function() {
+    	navigator.clipboard.writeText(this.bsrAsJSON);
+    },
+    "copyRaw":function() {
+    	navigator.clipboard.writeText(this.bsr);
+    },
+    "copyRawData":function() {
+    	navigator.clipboard.writeText(this.bsrDataLines.join('\n'));
+    },
+	"aiRangeLookupNN" :function(ddnn) {
+		let dd=ddnn.substr(0,2);
+		let o = Object.keys(this.aiRangeLookup);
+		let lowest=null;
+		let highest=null;
+		for (i=0; i<o.length; i++) {
+		
+			if (o[i].startsWith(dd)) {
+				if (lowest==null) {
+					lowest=o[i];
+				}
+				if (highest==null) {
+					highest=o[i];
+				}
+				if ((lowest!==null) && (o[i] < lowest)) {
+					lowest=o[i];
+				}
+				if ((highest!==null) && (o[i] > highest)) {
+					highest=o[i];
+				}
+			}
+		}
+		let rv={};
+		let c=0;
+		let l=this.aiRangeLookup[lowest];
+		let h=this.aiRangeLookup[highest];
+		if ((l !== undefined) && (l.hasOwnProperty('start'))) {
+			rv.start=l.start;
+			c++;
+		}
+		if ((h !== undefined) && (h.hasOwnProperty('end'))) {
+			rv.end=h.end;
+			c++;
+		}
+		if (c==2) {
+			return rv;
+		} else {
+			return ddnn;
+		}
+	},
+  
+  
+  	"columns": function(str) {
+  		let a=str.split(/(\s+)/);
+  		return removeSpacesFromArray(a);
+  	},
+  	"fnc1Required": function(a) {
+  		if (a[1] == "*") { return false } else { return true };
+  	},
+  	"title": function(a) {
+  		let rv="";
+  		for (let i=0; i<a.length; i++) {
+  			if (a[i] == "#") {
+  				rv=a.slice(i+1).join(" ");
+  			}
+  		}
+  		return rv;
+  	},
+  	"dlpkey": function(a) {
+  		let rv=false;
+  		for (let i=0; i<a.length; i++) {
+  			if (a[i].startsWith("dlpkey")) {
+  				rv=true;
+  			}
+  		}
+  		return rv;
+  	},
+  	"qualifiers": function(a) {
+  		let rv="";
+  		for (let i=0; i<a.length; i++) {
+  			if (a[i].startsWith("dlpkey=")) {
+  				rv=a[i].substr(7);
+  			}
+  		}
+  		return splitPipeThenComma(rv);
+  	},
+  	"requires": function(a) {
+  		let rv="";
+  		let reAIrange1 = /^\d{3}n/;
+  		let reAIrange2 = /^\d{2}nn/;
+  		for (let i=0; i<a.length; i++) {
+  			if (a[i].startsWith("req=")) {
+  				rv=a[i].substr(4);
+  			}
+  		}
+  		if (rv!=="") {
+  			let b=rv.split(",");
+  			let c=[];
+  			for (let j=0; j<b.length; j++) {
+  				if (reAIrange1.test(b[j])) {
+					c.push(this.aiRangeLookup[b[j]]);  				
+  				} else {
+					if (reAIrange2.test(b[j])) {
+						c.push(this.aiRangeLookupNN(b[j]));
+					
+					} else {
+						c.push(b[j]);
+					}
+  				}
+  			}
+			return c;  		
+  		}
+  	},
+  	"excludes": function(a) {
+  		let rv="";
+  		let reAIrange1 = /^\d{3}n/;
+  		let reAIrange2 = /^\d{2}nn/;
+  		for (let i=0; i<a.length; i++) {
+  			if (a[i].startsWith("ex=")) {
+  				rv=a[i].substr(3);
+  			}
+  		}
+  		if (rv!=="") {
+  			let b=rv.split(",");
+  			let c=[];
+  			for (let j=0; j<b.length; j++) {
+  				if (reAIrange1.test(b[j])) {
+					c.push(this.aiRangeLookup[b[j]]);  				
+  				} else {
+					if (reAIrange2.test(b[j])) {
+						c.push(this.aiRangeLookupNN(b[j]));
+					
+					} else {
+						c.push(b[j]);
+					}
+  				}
+  			}
+			return c;  		
+  		}
+  	},
+  	"component": function(a) {
+  		let rv=[];
+  		let re=/^(N\d)|(X\d)|(X\.\.)|(Y\.\.)|(N\.\.)|(\[N\d)|(\[X\d)|(\[Y\d)|(\[X\.\.)|(\[Y\.\.)|(\[N\.\.)/;
+  		for (let i=1; i<a.length; i++) {
+  			if (re.test(a[i])) {
+  				rv.push(a[i]);
+  			}
+  		}
+  		return rv;
+  	},
+  	"componentAsJSON": function(c) {
+  		let rv=[];
+  		let reNumeric=/^(?:\[)?N(?:\.\.)?(\d+)/;
+  		let reX=/^(?:\[)?X(?:\.\.)?(\d+)/;
+  		let reY=/^(?:\[)?Y(?:\.\.)?(\d+)/;
+  		for (let i=0; i<c.length; i++) {
+  			let o={};
+  			let checkDigit=null;
+  			let format=null;
+//  			o.raw=c[i];
+  			if (c[i].startsWith("[")) {
+  				o.optional = true;
+  			} else {
+  				o.optional = false;
+  			}
+  			let fixedLength=null;
+  			if (c[i].indexOf("..") == -1 ) {
+  				fixedLength = true;
+  			} else {
+  				fixedLength = false;
+  			}
+  			if (reNumeric.test(c[i])) {
+  				o.type="N";
+  				o.fixedLength=fixedLength;
+  				let m=c[i].match(reNumeric);
+  				o.length=parseInt(m[1]);
+  			}
+  			if (reX.test(c[i])) {
+  				o.type="X";
+  				o.fixedLength=fixedLength;
+  				let m=c[i].match(reX);
+  				o.length=parseInt(m[1]);
+  			}
+  			if (reY.test(c[i])) {
+  				o.type="Y";
+  				o.fixedLength=fixedLength;
+  				let m=c[i].match(reY);
+  				o.length=parseInt(m[1]);
+  			}
+  			if (c[i].indexOf("csum") > -1) {
+  				checkDigit=true;
+  			}
+  			if (c[i].indexOf(",") > -1) {
+  				let myFormat="";
+  				let f=c[i].substr(1+c[i].indexOf(","));
+  				let a=f.split(",");
+  				for (let j=0; j<a.length; a++) {
+  					if ((a[j] !== "csum") && (a[j] !== "key")) {
+  						myFormat=a[j];
+  					}
+  				}
+  				if (myFormat !== "") {
+					format=myFormat;
+  				}
+  			}
+  			if (format == "csumalpha") {
+  				if (checkDigit == true) {
+  					o.checkCharacters=true;
+  				}
+  			} else {
+  				if (checkDigit == true) {
+  					o.checkDigit=true;
+  				}
+  			}
+   			if (c[i].indexOf("key") > -1) {
+  				o.key=true;
+  			}
+  			if ((format !== null) && (format !== "csumalpha"))  {
+				o.format = format; 			  			
+  			}
+  			
+  			rv.push(o);
+  		}
+  		return rv;
+  	}
+  },
+  mounted() {
+  	loadAIdata(this.bsrSource);
+  },
+  computed : {
+  	"bsrAsJSON" : function() {
+  		let rv=[];
+  		let reAIrange=/^(\d+)-(\d+)/;
+  		
+  		for (let i=0; i<this.bsrDataLines.length; i++) {
+  			let r=this.bsrDataLines[i];
+  			let o={};
+  				let ai=this.columns(r)[0];
+  				if (reAIrange.test(ai)) {
+					let m=ai.match(reAIrange);
+					let p={};
+					p.start=m[1];
+					p.end=m[2];
+					o.applicationIdentifier=p;	
+  				} else {
+					o.applicationIdentifier=this.columns(r)[0];
+  				}
+  				o.title=this.title(this.columns(r));
+  				o.separatorRequired=this.fnc1Required(this.columns(r));
+  				o.components=this.componentAsJSON(this.component(this.columns(r)));
+  				o.requires=this.requires(this.columns(r));
+  				o.excludes=this.excludes(this.columns(r));
+  				if (this.dlpkey(this.columns(r))) {
+  				o.gs1DigitalLinkPrimaryKey = true;
+  				}
+  				if (this.qualifiers(this.columns(r)).length>0) {
+  				o.gs1DigitalLinkQualifiers = this.qualifiers(this.columns(r));
+  				}
+  			rv.push(o);
+  		}
+  		return JSON.stringify(rv,null,2);
+  	},
+  
+  
+  	"aiRanges" : function() {
+  		let rv=[];
+  		let reAIrange=/^(\d+-\d+)/;
+    	for (let i=0; i<this.bsrLines.length; i++) {
+    		if (reAIrange.test(this.bsrLines[i])) {
+    			let m=this.bsrLines[i].match(reAIrange);
+    			rv.push(m[1]);
+    		}
+    	}
+		return rv;
+  	},
+  	
+  	"aiRangeLookup" : function() {
+  		let rv={};
+  		let reAIrange=/^(\d+)-(\d+)/;
+  		for (let i=0; i< this.aiRanges.length; i++) {
+			let o={};
+			let m=this.aiRanges[i].match(reAIrange);
+			o.start=m[1];
+			o.end=m[2];
+			abbrev=m[1].replace(/\d$/,"n");
+			rv[abbrev]=o;
+  		}
+  		return rv;
+  	},
+  	
+  
+    "bsrLines" :function() {
+  		if (this.bsr !== "") {
+  			return this.bsr.split("\n");
+  		} else {
+  			return [];
+  		}
+    },
+    "bsrDataLines" : function() {
+    	let rv=[];
+    	for (let i=0; i<this.bsrLines.length; i++) {
+    		if ((this.bsrLines[i] !== "") && (this.bsrLines[i].charAt(0) !== "#")) {
+    			rv.push(this.bsrLines[i]);
+    		}
+    	}
+    	return rv;
+    },
+  	"lineCount": function() {
+  		if (this.bsr !== "") {
+  			return this.bsrDataLines.length;
+  		}
+  	}
+  }
+}).mount("#app1");
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,3840 @@
+[
+    {
+        "applicationIdentifier": "00",
+        "title": "SSCC",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 18,
+                "checkDigit": true,
+                "key": true
+            }
+        ],
+        "gs1DigitalLinkPrimaryKey": true
+    },
+    {
+        "applicationIdentifier": "01",
+        "title": "GTIN",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 14,
+                "checkDigit": true,
+                "key": true
+            }
+        ],
+        "excludes": [
+            "02",
+            "255",
+            "37"
+        ],
+        "gs1DigitalLinkPrimaryKey": true,
+        "gs1DigitalLinkQualifiers": [
+            [
+                "22",
+                "10",
+                "21"
+            ],
+            [
+                "235"
+            ]
+        ]
+    },
+    {
+        "applicationIdentifier": "02",
+        "title": "CONTENT",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 14,
+                "checkDigit": true,
+                "key": true
+            }
+        ],
+        "requires": [
+            "37"
+        ]
+    },
+    {
+        "applicationIdentifier": "10",
+        "title": "BATCH/LOT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01",
+            "02",
+            "8006",
+            "8026"
+        ]
+    },
+    {
+        "applicationIdentifier": "11",
+        "title": "PROD DATE",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmd0"
+            }
+        ],
+        "requires": [
+            "01",
+            "02",
+            "8006",
+            "8026"
+        ]
+    },
+    {
+        "applicationIdentifier": "12",
+        "title": "DUE DATE",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmd0"
+            }
+        ],
+        "requires": [
+            "8020"
+        ]
+    },
+    {
+        "applicationIdentifier": "13",
+        "title": "PACK DATE",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmd0"
+            }
+        ],
+        "requires": [
+            "01",
+            "02",
+            "8006",
+            "8026"
+        ]
+    },
+    {
+        "applicationIdentifier": "15",
+        "title": "BEST BEFORE or BEST BY",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmd0"
+            }
+        ],
+        "requires": [
+            "01",
+            "02",
+            "8006",
+            "8026"
+        ]
+    },
+    {
+        "applicationIdentifier": "16",
+        "title": "SELL BY",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmd0"
+            }
+        ],
+        "requires": [
+            "01",
+            "02",
+            "8006",
+            "8026"
+        ]
+    },
+    {
+        "applicationIdentifier": "17",
+        "title": "USE BY or EXPIRY",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmd0"
+            }
+        ],
+        "requires": [
+            "01",
+            "02",
+            "255",
+            "8006",
+            "8026"
+        ]
+    },
+    {
+        "applicationIdentifier": "20",
+        "title": "VARIANT",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 2
+            }
+        ],
+        "requires": [
+            "01",
+            "02",
+            "8006",
+            "8026"
+        ]
+    },
+    {
+        "applicationIdentifier": "21",
+        "title": "SERIAL",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01",
+            "8006"
+        ],
+        "excludes": [
+            "235"
+        ]
+    },
+    {
+        "applicationIdentifier": "22",
+        "title": "CPV",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01"
+        ]
+    },
+    {
+        "applicationIdentifier": "235",
+        "title": "TPX",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 28
+            }
+        ],
+        "requires": [
+            "01"
+        ]
+    },
+    {
+        "applicationIdentifier": "240",
+        "title": "ADDITIONAL ID",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30
+            }
+        ],
+        "requires": [
+            "01",
+            "02",
+            "8006",
+            "8026"
+        ]
+    },
+    {
+        "applicationIdentifier": "241",
+        "title": "CUST. PART NO.",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30
+            }
+        ],
+        "requires": [
+            "01",
+            "02",
+            "8006",
+            "8026"
+        ]
+    },
+    {
+        "applicationIdentifier": "242",
+        "title": "MTO VARIANT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": false,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02",
+            "8006",
+            "8026"
+        ]
+    },
+    {
+        "applicationIdentifier": "243",
+        "title": "PCN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01"
+        ]
+    },
+    {
+        "applicationIdentifier": "250",
+        "title": "SECONDARY SERIAL",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30
+            }
+        ],
+        "requires": [
+            "21"
+        ]
+    },
+    {
+        "applicationIdentifier": "251",
+        "title": "REF. TO SOURCE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30
+            }
+        ],
+        "requires": [
+            "01",
+            "8006"
+        ]
+    },
+    {
+        "applicationIdentifier": "253",
+        "title": "GDTI",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 13,
+                "checkDigit": true,
+                "key": true
+            },
+            {
+                "optional": true,
+                "type": "X",
+                "fixedLength": false,
+                "length": 17
+            }
+        ],
+        "gs1DigitalLinkPrimaryKey": true
+    },
+    {
+        "applicationIdentifier": "254",
+        "title": "GLN EXTENSION COMPONENT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "414"
+        ]
+    },
+    {
+        "applicationIdentifier": "255",
+        "title": "GCN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 13,
+                "checkDigit": true,
+                "key": true
+            },
+            {
+                "optional": true,
+                "type": "N",
+                "fixedLength": false,
+                "length": 12
+            }
+        ],
+        "excludes": [
+            "01",
+            "02",
+            "415",
+            "8006",
+            "8020",
+            "8026"
+        ],
+        "gs1DigitalLinkPrimaryKey": true
+    },
+    {
+        "applicationIdentifier": "30",
+        "title": "VAR. COUNT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": false,
+                "length": 8
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3100",
+            "end": "3105"
+        },
+        "title": "NET WEIGHT (kg)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3100",
+                "end": "3109"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3110",
+            "end": "3115"
+        },
+        "title": "LENGTH (m)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3110",
+                "end": "3119"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3120",
+            "end": "3125"
+        },
+        "title": "WIDTH (m)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3120",
+                "end": "3129"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3130",
+            "end": "3135"
+        },
+        "title": "HEIGHT (m)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3130",
+                "end": "3139"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3140",
+            "end": "3145"
+        },
+        "title": "AREA (m²)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3140",
+                "end": "3149"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3150",
+            "end": "3155"
+        },
+        "title": "NET VOLUME (l)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3150",
+                "end": "3159"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3160",
+            "end": "3165"
+        },
+        "title": "NET VOLUME (m³)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3160",
+                "end": "3169"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3200",
+            "end": "3205"
+        },
+        "title": "NET WEIGHT (lb)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3200",
+                "end": "3209"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3210",
+            "end": "3215"
+        },
+        "title": "LENGTH (in)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3210",
+                "end": "3219"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3220",
+            "end": "3225"
+        },
+        "title": "LENGTH (ft)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3220",
+                "end": "3229"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3230",
+            "end": "3235"
+        },
+        "title": "LENGTH (yd)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3230",
+                "end": "3239"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3240",
+            "end": "3245"
+        },
+        "title": "WIDTH (in)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3240",
+                "end": "3249"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3250",
+            "end": "3255"
+        },
+        "title": "WIDTH (ft)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3250",
+                "end": "3259"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3260",
+            "end": "3265"
+        },
+        "title": "WIDTH (yd)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3260",
+                "end": "3269"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3270",
+            "end": "3275"
+        },
+        "title": "HEIGHT (in)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3270",
+                "end": "3279"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3280",
+            "end": "3285"
+        },
+        "title": "HEIGHT (ft)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3280",
+                "end": "3289"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3290",
+            "end": "3295"
+        },
+        "title": "HEIGHT (yd)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3290",
+                "end": "3299"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3300",
+            "end": "3305"
+        },
+        "title": "GROSS WEIGHT (kg)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3300",
+                "end": "3309"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3310",
+            "end": "3315"
+        },
+        "title": "LENGTH (m), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3310",
+                "end": "3319"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3320",
+            "end": "3325"
+        },
+        "title": "WIDTH (m), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3320",
+                "end": "3329"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3330",
+            "end": "3335"
+        },
+        "title": "HEIGHT (m), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3330",
+                "end": "3339"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3340",
+            "end": "3345"
+        },
+        "title": "AREA (m²), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3340",
+                "end": "3349"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3350",
+            "end": "3355"
+        },
+        "title": "VOLUME (l), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3350",
+                "end": "3359"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3360",
+            "end": "3365"
+        },
+        "title": "VOLUME (m³), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3360",
+                "end": "3369"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3370",
+            "end": "3375"
+        },
+        "title": "KG PER m²",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3370",
+                "end": "3379"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3400",
+            "end": "3405"
+        },
+        "title": "GROSS WEIGHT (lb)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3400",
+                "end": "3409"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3410",
+            "end": "3415"
+        },
+        "title": "LENGTH (in), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3410",
+                "end": "3419"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3420",
+            "end": "3425"
+        },
+        "title": "LENGTH (ft), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3420",
+                "end": "3429"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3430",
+            "end": "3435"
+        },
+        "title": "LENGTH (yd), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3430",
+                "end": "3439"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3440",
+            "end": "3445"
+        },
+        "title": "WIDTH (in), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3440",
+                "end": "3449"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3450",
+            "end": "3455"
+        },
+        "title": "WIDTH (ft), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3450",
+                "end": "3459"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3460",
+            "end": "3465"
+        },
+        "title": "WIDTH (yd), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3460",
+                "end": "3469"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3470",
+            "end": "3475"
+        },
+        "title": "HEIGHT (in), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3470",
+                "end": "3479"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3480",
+            "end": "3485"
+        },
+        "title": "HEIGHT (ft), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3480",
+                "end": "3489"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3490",
+            "end": "3495"
+        },
+        "title": "HEIGHT (yd), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3490",
+                "end": "3499"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3500",
+            "end": "3505"
+        },
+        "title": "AREA (in²)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3500",
+                "end": "3509"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3510",
+            "end": "3515"
+        },
+        "title": "AREA (ft²)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3510",
+                "end": "3519"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3520",
+            "end": "3525"
+        },
+        "title": "AREA (yd²)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3520",
+                "end": "3529"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3530",
+            "end": "3535"
+        },
+        "title": "AREA (in²), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3530",
+                "end": "3539"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3540",
+            "end": "3545"
+        },
+        "title": "AREA (ft²), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3540",
+                "end": "3549"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3550",
+            "end": "3555"
+        },
+        "title": "AREA (yd²), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3550",
+                "end": "3559"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3560",
+            "end": "3565"
+        },
+        "title": "NET WEIGHT (t oz)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3560",
+                "end": "3569"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3570",
+            "end": "3575"
+        },
+        "title": "NET VOLUME (oz)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3570",
+                "end": "3579"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3600",
+            "end": "3605"
+        },
+        "title": "NET VOLUME (qt)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3600",
+                "end": "3609"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3610",
+            "end": "3615"
+        },
+        "title": "NET VOLUME (gal.)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3610",
+                "end": "3619"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3620",
+            "end": "3625"
+        },
+        "title": "VOLUME (qt), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3620",
+                "end": "3629"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3630",
+            "end": "3635"
+        },
+        "title": "VOLUME (gal.), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3630",
+                "end": "3639"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3640",
+            "end": "3645"
+        },
+        "title": "VOLUME (in³)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3640",
+                "end": "3649"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3650",
+            "end": "3655"
+        },
+        "title": "VOLUME (ft³)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3650",
+                "end": "3659"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3660",
+            "end": "3665"
+        },
+        "title": "VOLUME (yd³)",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            {
+                "start": "3660",
+                "end": "3669"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3670",
+            "end": "3675"
+        },
+        "title": "VOLUME (in³), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3670",
+                "end": "3679"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3680",
+            "end": "3685"
+        },
+        "title": "VOLUME (ft³), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3680",
+                "end": "3689"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3690",
+            "end": "3695"
+        },
+        "title": "VOLUME (yd³), log",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ],
+        "excludes": [
+            {
+                "start": "3690",
+                "end": "3699"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": "37",
+        "title": "COUNT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": false,
+                "length": 8
+            }
+        ],
+        "requires": [
+            "02",
+            "8026"
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3900",
+            "end": "3909"
+        },
+        "title": "AMOUNT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": false,
+                "length": 15
+            }
+        ],
+        "requires": [
+            "255",
+            "8020"
+        ],
+        "excludes": [
+            {
+                "start": "3900",
+                "end": "3909"
+            },
+            {
+                "start": "3910",
+                "end": "3919"
+            },
+            {
+                "start": "3940",
+                "end": "3949"
+            },
+            "8111"
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3910",
+            "end": "3919"
+        },
+        "title": "AMOUNT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 3,
+                "format": "iso4217"
+            },
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": false,
+                "length": 15
+            }
+        ],
+        "requires": [
+            "8020"
+        ],
+        "excludes": [
+            {
+                "start": "3910",
+                "end": "3919"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3920",
+            "end": "3929"
+        },
+        "title": "PRICE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": false,
+                "length": 15
+            }
+        ],
+        "requires": [
+            "30",
+            {
+                "start": "3100",
+                "end": "3199"
+            },
+            {
+                "start": "3200",
+                "end": "3299"
+            },
+            {
+                "start": "3500",
+                "end": "3599"
+            },
+            {
+                "start": "3600",
+                "end": "3699"
+            }
+        ],
+        "excludes": [
+            {
+                "start": "3920",
+                "end": "3929"
+            },
+            {
+                "start": "3930",
+                "end": "3939"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3930",
+            "end": "3939"
+        },
+        "title": "PRICE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 3,
+                "format": "iso4217"
+            },
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": false,
+                "length": 15
+            }
+        ],
+        "requires": [
+            "30",
+            {
+                "start": "3100",
+                "end": "3199"
+            },
+            {
+                "start": "3200",
+                "end": "3299"
+            },
+            {
+                "start": "3500",
+                "end": "3599"
+            },
+            {
+                "start": "3600",
+                "end": "3699"
+            }
+        ],
+        "excludes": [
+            {
+                "start": "3930",
+                "end": "3939"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3940",
+            "end": "3943"
+        },
+        "title": "PRCNT OFF",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 4
+            }
+        ],
+        "requires": [
+            "255"
+        ],
+        "excludes": [
+            {
+                "start": "3940",
+                "end": "3949"
+            },
+            "8111"
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "3950",
+            "end": "3955"
+        },
+        "title": "PRICE/UoM",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "30",
+            {
+                "start": "3100",
+                "end": "3199"
+            },
+            {
+                "start": "3200",
+                "end": "3299"
+            },
+            {
+                "start": "3500",
+                "end": "3599"
+            },
+            {
+                "start": "3600",
+                "end": "3699"
+            }
+        ],
+        "excludes": [
+            {
+                "start": "3920",
+                "end": "3929"
+            },
+            {
+                "start": "3930",
+                "end": "3939"
+            },
+            {
+                "start": "3950",
+                "end": "3959"
+            },
+            "8005"
+        ]
+    },
+    {
+        "applicationIdentifier": "400",
+        "title": "ORDER NUMBER",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": "401",
+        "title": "GINC",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30,
+                "key": true
+            }
+        ],
+        "gs1DigitalLinkPrimaryKey": true
+    },
+    {
+        "applicationIdentifier": "402",
+        "title": "GSIN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 17,
+                "checkDigit": true,
+                "key": true
+            }
+        ],
+        "gs1DigitalLinkPrimaryKey": true
+    },
+    {
+        "applicationIdentifier": "403",
+        "title": "ROUTE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "410",
+        "title": "SHIP TO LOC",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 13,
+                "checkDigit": true,
+                "key": true
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": "411",
+        "title": "BILL TO",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 13,
+                "checkDigit": true,
+                "key": true
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": "412",
+        "title": "PURCHASE FROM",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 13,
+                "checkDigit": true,
+                "key": true
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": "413",
+        "title": "SHIP FOR LOC",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 13,
+                "checkDigit": true,
+                "key": true
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": "414",
+        "title": "LOC NO.",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 13,
+                "checkDigit": true,
+                "key": true
+            }
+        ],
+        "gs1DigitalLinkPrimaryKey": true,
+        "gs1DigitalLinkQualifiers": [
+            [
+                "254"
+            ],
+            [
+                "7040"
+            ]
+        ]
+    },
+    {
+        "applicationIdentifier": "415",
+        "title": "PAY TO",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 13,
+                "checkDigit": true,
+                "key": true
+            }
+        ],
+        "requires": [
+            "8020"
+        ],
+        "gs1DigitalLinkPrimaryKey": true,
+        "gs1DigitalLinkQualifiers": [
+            [
+                "8020"
+            ]
+        ]
+    },
+    {
+        "applicationIdentifier": "416",
+        "title": "PROD/SERV LOC",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 13,
+                "checkDigit": true,
+                "key": true
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": "417",
+        "title": "PARTY",
+        "separatorRequired": false,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 13,
+                "checkDigit": true,
+                "key": true
+            }
+        ],
+        "gs1DigitalLinkPrimaryKey": true,
+        "gs1DigitalLinkQualifiers": [
+            [
+                "7040"
+            ]
+        ]
+    },
+    {
+        "applicationIdentifier": "420",
+        "title": "SHIP TO POST",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "excludes": [
+            "421"
+        ]
+    },
+    {
+        "applicationIdentifier": "421",
+        "title": "SHIP TO POST",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 3,
+                "format": "iso3166"
+            },
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 9
+            }
+        ],
+        "excludes": [
+            "4307"
+        ]
+    },
+    {
+        "applicationIdentifier": "422",
+        "title": "ORIGIN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 3,
+                "format": "iso3166"
+            }
+        ],
+        "requires": [
+            "01",
+            "02",
+            "8006",
+            "8026"
+        ],
+        "excludes": [
+            "426"
+        ]
+    },
+    {
+        "applicationIdentifier": "423",
+        "title": "COUNTRY - INITIAL PROCESS",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": false,
+                "length": 15,
+                "format": "iso3166list"
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            "426"
+        ]
+    },
+    {
+        "applicationIdentifier": "424",
+        "title": "COUNTRY - PROCESS",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 3,
+                "format": "iso3166"
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            "426"
+        ]
+    },
+    {
+        "applicationIdentifier": "425",
+        "title": "COUNTRY - DISASSEMBLY",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": false,
+                "length": 15,
+                "format": "iso3166list"
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ],
+        "excludes": [
+            "426"
+        ]
+    },
+    {
+        "applicationIdentifier": "426",
+        "title": "COUNTRY - FULL PROCESS",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 3,
+                "format": "iso3166"
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": "427",
+        "title": "ORIGIN SUBDIVISION",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 3
+            }
+        ],
+        "requires": [
+            "422"
+        ]
+    },
+    {
+        "applicationIdentifier": "4300",
+        "title": "SHIP TO COMP",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 35,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4301",
+        "title": "SHIP TO NAME",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 35,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4302",
+        "title": "SHIP TO ADD1",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 70,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4303",
+        "title": "SHIP TO ADD2",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 70,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "4302"
+        ]
+    },
+    {
+        "applicationIdentifier": "4304",
+        "title": "SHIP TO SUB",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 70,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4305",
+        "title": "SHIP TO LOC",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 70,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4306",
+        "title": "SHIP TO REG",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 70,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4307",
+        "title": "SHIP TO COUNTRY",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": true,
+                "length": 2,
+                "format": "iso3166alpha2"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4308",
+        "title": "SHIP TO PHONE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4309",
+        "title": "SHIP TO GEO",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 20,
+                "format": "latlong"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4310",
+        "title": "RTN TO COMP",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 35,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4311",
+        "title": "RTN TO NAME",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 35,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4312",
+        "title": "RTN TO ADD1",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 70,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4313",
+        "title": "RTN TO ADD2",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 70,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "4312"
+        ]
+    },
+    {
+        "applicationIdentifier": "4314",
+        "title": "RTN TO SUB",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 70,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4315",
+        "title": "RTN TO LOC",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 70,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4316",
+        "title": "RTN TO REG",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 70,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4317",
+        "title": "RTN TO COUNTRY",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": true,
+                "length": 2,
+                "format": "iso3166alpha2"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4318",
+        "title": "RTN TO POST",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4319",
+        "title": "RTN TO PHONE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4320",
+        "title": "SRV DESCRIPTION",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 35,
+                "format": "pcenc"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4321",
+        "title": "DANGEROUS GOODS",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 1,
+                "format": "yesno"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4322",
+        "title": "AUTH TO LEAVE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 1,
+                "format": "yesno"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4323",
+        "title": "SIG REQUIRED",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 1,
+                "format": "yesno"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4324",
+        "title": "NOT BEF DEL DT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmd0"
+            },
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 4,
+                "format": "hhmm"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4325",
+        "title": "NOT AFT DEL DT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmd0"
+            },
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 4,
+                "format": "hhmm"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "4326",
+        "title": "REL DATE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmdd"
+            }
+        ],
+        "requires": [
+            "00"
+        ]
+    },
+    {
+        "applicationIdentifier": "7001",
+        "title": "NSN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 13
+            }
+        ],
+        "requires": [
+            "01",
+            "02",
+            "8006",
+            "8026"
+        ]
+    },
+    {
+        "applicationIdentifier": "7002",
+        "title": "MEAT CUT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": "7003",
+        "title": "EXPIRY TIME",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmdd"
+            },
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 4,
+                "format": "hhmm"
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": "7004",
+        "title": "ACTIVE POTENCY",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": false,
+                "length": 4
+            }
+        ],
+        "requires": [
+            "10"
+        ]
+    },
+    {
+        "applicationIdentifier": "7005",
+        "title": "CATCH AREA",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 12
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": "7006",
+        "title": "FIRST FREEZE DATE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmdd"
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": "7007",
+        "title": "HARVEST DATE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmdd"
+            },
+            {
+                "optional": true,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmdd"
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": "7008",
+        "title": "AQUATIC SPECIES",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 3
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": "7009",
+        "title": "FISHING GEAR TYPE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 10
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": "7010",
+        "title": "PROD METHOD",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 2
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": "7011",
+        "title": "TEST BY DATE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6,
+                "format": "yymmdd"
+            },
+            {
+                "optional": true,
+                "type": "N",
+                "fixedLength": true,
+                "length": 4,
+                "format": "hhmm"
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": "7020",
+        "title": "REFURB LOT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "416"
+        ]
+    },
+    {
+        "applicationIdentifier": "7021",
+        "title": "FUNC STAT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01",
+            "8006"
+        ]
+    },
+    {
+        "applicationIdentifier": "7022",
+        "title": "REV STAT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "7021"
+        ]
+    },
+    {
+        "applicationIdentifier": "7023",
+        "title": "GIAI - ASSEMBLY",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30,
+                "key": true
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": "7040",
+        "title": "UIC+EXT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 1
+            },
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": true,
+                "length": 1
+            },
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": true,
+                "length": 1
+            },
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": true,
+                "length": 1,
+                "format": "importeridx"
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": "710",
+        "title": "NHRN PZN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01"
+        ]
+    },
+    {
+        "applicationIdentifier": "711",
+        "title": "NHRN CIP",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01"
+        ]
+    },
+    {
+        "applicationIdentifier": "712",
+        "title": "NHRN CN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01"
+        ]
+    },
+    {
+        "applicationIdentifier": "713",
+        "title": "NHRN DRN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01"
+        ]
+    },
+    {
+        "applicationIdentifier": "714",
+        "title": "NHRN AIM",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01"
+        ]
+    },
+    {
+        "applicationIdentifier": "715",
+        "title": "NHRN NDC",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01"
+        ]
+    },
+    {
+        "applicationIdentifier": "7240",
+        "title": "PROTOCOL",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01",
+            "8006"
+        ]
+    },
+    {
+        "applicationIdentifier": "7241",
+        "title": "AIDC MEDIA TYPE",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 2,
+                "format": "mediatype"
+            }
+        ],
+        "requires": [
+            "8017",
+            "8018"
+        ]
+    },
+    {
+        "applicationIdentifier": "7242",
+        "title": "VCN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 25
+            }
+        ],
+        "requires": [
+            "8017",
+            "8018"
+        ]
+    },
+    {
+        "applicationIdentifier": "8001",
+        "title": "DIMENSIONS",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 4,
+                "format": "nonzero"
+            },
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 5,
+                "format": "nonzero"
+            },
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 3,
+                "format": "nonzero"
+            },
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 1,
+                "format": "winding"
+            },
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 1
+            }
+        ],
+        "requires": [
+            "01"
+        ]
+    },
+    {
+        "applicationIdentifier": "8002",
+        "title": "CMT NO.",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": "8003",
+        "title": "GRAI",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 1,
+                "format": "zero"
+            },
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 13,
+                "checkDigit": true,
+                "key": true
+            },
+            {
+                "optional": true,
+                "type": "X",
+                "fixedLength": false,
+                "length": 16
+            }
+        ],
+        "gs1DigitalLinkPrimaryKey": true
+    },
+    {
+        "applicationIdentifier": "8004",
+        "title": "GIAI",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30,
+                "key": true
+            }
+        ],
+        "gs1DigitalLinkPrimaryKey": true,
+        "gs1DigitalLinkQualifiers": [
+            [
+                "7040"
+            ]
+        ]
+    },
+    {
+        "applicationIdentifier": "8005",
+        "title": "PRICE PER UNIT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 6
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": "8006",
+        "title": "ITIP",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 14,
+                "checkDigit": true
+            },
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 4,
+                "format": "pieceoftotal"
+            }
+        ],
+        "excludes": [
+            "01",
+            "37"
+        ],
+        "gs1DigitalLinkPrimaryKey": true,
+        "gs1DigitalLinkQualifiers": [
+            [
+                "22",
+                "10",
+                "21"
+            ]
+        ]
+    },
+    {
+        "applicationIdentifier": "8007",
+        "title": "IBAN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 34,
+                "format": "iban"
+            }
+        ],
+        "requires": [
+            "415"
+        ]
+    },
+    {
+        "applicationIdentifier": "8008",
+        "title": "PROD TIME",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 8,
+                "format": "yymmddhh"
+            },
+            {
+                "optional": true,
+                "type": "N",
+                "fixedLength": false,
+                "length": 4,
+                "format": "mmoptss"
+            }
+        ],
+        "requires": [
+            "01",
+            "02"
+        ]
+    },
+    {
+        "applicationIdentifier": "8009",
+        "title": "OPTSEN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 50
+            }
+        ],
+        "requires": [
+            "00",
+            "01"
+        ]
+    },
+    {
+        "applicationIdentifier": "8010",
+        "title": "CPID",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "Y",
+                "fixedLength": false,
+                "length": 30,
+                "key": true
+            }
+        ],
+        "gs1DigitalLinkPrimaryKey": true,
+        "gs1DigitalLinkQualifiers": [
+            [
+                "8011"
+            ]
+        ]
+    },
+    {
+        "applicationIdentifier": "8011",
+        "title": "CPID SERIAL",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": false,
+                "length": 12,
+                "format": "nozeroprefix"
+            }
+        ],
+        "requires": [
+            "8010"
+        ]
+    },
+    {
+        "applicationIdentifier": "8012",
+        "title": "VERSION",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 20
+            }
+        ],
+        "requires": [
+            "01",
+            "8006"
+        ]
+    },
+    {
+        "applicationIdentifier": "8013",
+        "title": "GMN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 25,
+                "checkCharacters": true,
+                "key": true
+            }
+        ],
+        "gs1DigitalLinkPrimaryKey": true
+    },
+    {
+        "applicationIdentifier": "8017",
+        "title": "GSRN - PROVIDER",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 18,
+                "checkDigit": true,
+                "key": true
+            }
+        ],
+        "excludes": [
+            "8018"
+        ],
+        "gs1DigitalLinkPrimaryKey": true,
+        "gs1DigitalLinkQualifiers": [
+            [
+                "8019"
+            ]
+        ]
+    },
+    {
+        "applicationIdentifier": "8018",
+        "title": "GSRN - RECIPIENT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 18,
+                "checkDigit": true,
+                "key": true
+            }
+        ],
+        "excludes": [
+            "8017"
+        ],
+        "gs1DigitalLinkPrimaryKey": true,
+        "gs1DigitalLinkQualifiers": [
+            [
+                "8019"
+            ]
+        ]
+    },
+    {
+        "applicationIdentifier": "8019",
+        "title": "SRIN",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": false,
+                "length": 10
+            }
+        ],
+        "requires": [
+            "8017",
+            "8018"
+        ]
+    },
+    {
+        "applicationIdentifier": "8020",
+        "title": "REF NO.",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 25
+            }
+        ],
+        "requires": [
+            "415"
+        ]
+    },
+    {
+        "applicationIdentifier": "8026",
+        "title": "ITIP CONTENT",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 14,
+                "checkDigit": true
+            },
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 4,
+                "format": "pieceoftotal"
+            }
+        ],
+        "requires": [
+            "37"
+        ],
+        "excludes": [
+            "02",
+            "8006"
+        ]
+    },
+    {
+        "applicationIdentifier": "8111",
+        "title": "POINTS",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "N",
+                "fixedLength": true,
+                "length": 4
+            }
+        ],
+        "requires": [
+            "255"
+        ]
+    },
+    {
+        "applicationIdentifier": "8200",
+        "title": "PRODUCT URL",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 70
+            }
+        ],
+        "requires": [
+            "01"
+        ]
+    },
+    {
+        "applicationIdentifier": "90",
+        "title": "INTERNAL",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 30
+            }
+        ]
+    },
+    {
+        "applicationIdentifier": {
+            "start": "91",
+            "end": "99"
+        },
+        "title": "INTERNAL",
+        "separatorRequired": true,
+        "components": [
+            {
+                "optional": false,
+                "type": "X",
+                "fixedLength": false,
+                "length": 90
+            }
+        ]
+    }
+]
