@@ -117,7 +117,7 @@
 						<h1 style="text-align: left;">GS1 Unified Authoritative AI Monster Sheet (AAMS)</h1>
 						<p class="left">Search by AI:&nbsp;<input type="text" v-model="selectedAI">&nbsp;<input type="button" v-if="showDetailsBoolean" :value="showDetailsLabel" class="green" @click="displayDetails(selectedAI)">&nbsp;<input type="button" value="Clear / Show all" @click="clearSelectedAI()" class="red"></p>
 						<p class="left">Search by keyword:&nbsp;<input type="text" v-model="searchKeyword">&nbsp;<input type="button" value="Clear" @click="clearKeyword()" class="red"></p>
-						<p class="left"><a href="aiDataMerged-sanitised.json" target="_blank">AAMS data as JSON</a></p>
+						<p class="left"><a href="aiDataMerged-2023-05-04.json" target="_blank">AAMS data as JSON</a></p>
 						<p>&nbsp;</p>
 					</th>
 					<th v-for="c in components.length" style="border: none; outline: none;"></th>
@@ -217,11 +217,13 @@ function byKeyword(keyword) {
 
 function byIsGS1DLprimaryKey(b) {
 	return function(element) {
+		if (element !== undefined) {
 		if (b == "true") {
 			return element.gs1DigitalLinkPrimaryKey;
 		}
 		if (b == "false") {
 			return !(element.hasOwnProperty("gs1DigitalLinkPrimaryKey"));
+		}
 		}
 	}
 }
@@ -297,15 +299,17 @@ let app=Vue.createApp({
   	}
   },
   mounted() {
-  	loadAIdata("aiDataMerged-sanitised.json");
+  	loadAIdata("aiDataMerged-2023-05-04.json");
   },
   computed : {
   	"showDetailsBoolean" : function() {
+		if (this.aiMap !== undefined) {
   		if (this.aiMap.hasOwnProperty(this.selectedAI)) {
   			return true;
   		} else {
   			return false;
   		}
+		}
   	},
   
   	"headerColSpan" : function() {
@@ -318,6 +322,7 @@ let app=Vue.createApp({
   	"expandedBSR": function() {
   		let rv=[];
   		for (let i=0; i<this.bsr.length; i++) {
+			if (this.bsr[i].applicationIdentifier !== undefined) {
   			if (this.bsr[i].applicationIdentifier.hasOwnProperty('start')) {
 				let s=this.bsr[i].applicationIdentifier.start;
 				let e=this.bsr[i].applicationIdentifier.end;
@@ -329,6 +334,7 @@ let app=Vue.createApp({
 			} else {
 	  			rv.push(this.bsr[i]);		
   			}
+			}
   		}
   		return rv;
   	},
