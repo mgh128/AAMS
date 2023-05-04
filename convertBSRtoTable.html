@@ -285,9 +285,11 @@ let app=Vue.createApp({
   	},
   	"title": function(a) {
   		let rv="";
+  		let found=false;
   		for (let i=0; i<a.length; i++) {
-  			if (a[i] == "#") {
+  			if ((a[i] == "#") && (!found)) {
   				rv=a.slice(i+1).join(" ");
+  				found=true;
   			}
   		}
   		return rv;
