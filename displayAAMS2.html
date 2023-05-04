@@ -217,11 +217,13 @@ function byKeyword(keyword) {
 
 function byIsGS1DLprimaryKey(b) {
 	return function(element) {
+		if (element !== undefined) {
 		if (b == "true") {
 			return element.gs1DigitalLinkPrimaryKey;
 		}
 		if (b == "false") {
 			return !(element.hasOwnProperty("gs1DigitalLinkPrimaryKey"));
+		}
 		}
 	}
 }
