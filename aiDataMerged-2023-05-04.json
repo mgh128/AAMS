@@ -12737,42 +12737,6 @@
     ]
   },
   {
-    "applicationIdentifier": "3956",
-    "formatString": "N4+N6",
-    "label": "PRICE/UoM",
-    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
-    "fnc1required": true,
-    "regex": "^3956(\\d{0,6})$",
-    "note": "\"The fourth digit of this AI indicates the number of decimal places. For example if the fourth digit is 3 the decimal is in the 3rd position (nnn.nnn), if the fourth digit is 1 the decimal is in the 1st position (nnnnn.n). See GS1 General Specifications for full details.\""
-  },
-  {
-    "applicationIdentifier": "3957",
-    "formatString": "N4+N6",
-    "label": "PRICE/UoM",
-    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
-    "fnc1required": true,
-    "regex": "^3957(\\d{0,6})$",
-    "note": "\"The fourth digit of this AI indicates the number of decimal places. For example if the fourth digit is 3 the decimal is in the 3rd position (nnn.nnn), if the fourth digit is 1 the decimal is in the 1st position (nnnnn.n). See GS1 General Specifications for full details.\""
-  },
-  {
-    "applicationIdentifier": "3958",
-    "formatString": "N4+N6",
-    "label": "PRICE/UoM",
-    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
-    "fnc1required": true,
-    "regex": "^3958(\\d{0,6})$",
-    "note": "\"The fourth digit of this AI indicates the number of decimal places. For example if the fourth digit is 3 the decimal is in the 3rd position (nnn.nnn), if the fourth digit is 1 the decimal is in the 1st position (nnnnn.n). See GS1 General Specifications for full details.\""
-  },
-  {
-    "applicationIdentifier": "3959",
-    "formatString": "N4+N6",
-    "label": "PRICE/UoM",
-    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
-    "fnc1required": true,
-    "regex": "^3959(\\d{0,6})$",
-    "note": "\"The fourth digit of this AI indicates the number of decimal places. For example if the fourth digit is 3 the decimal is in the 3rd position (nnn.nnn), if the fourth digit is 1 the decimal is in the 1st position (nnnnn.n). See GS1 General Specifications for full details.\""
-  },
-  {
     "applicationIdentifier": "400",
     "formatString": "N3+X..30",
     "label": "ORDER NUMBER",
