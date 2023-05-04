@@ -303,11 +303,13 @@ let app=Vue.createApp({
   },
   computed : {
   	"showDetailsBoolean" : function() {
+		if (this.aiMap !== undefined) {
   		if (this.aiMap.hasOwnProperty(this.selectedAI)) {
   			return true;
   		} else {
   			return false;
   		}
+		}
   	},
   
   	"headerColSpan" : function() {
@@ -320,6 +322,7 @@ let app=Vue.createApp({
   	"expandedBSR": function() {
   		let rv=[];
   		for (let i=0; i<this.bsr.length; i++) {
+			if (this.bsr[i].applicationIdentifier !== undefined) {
   			if (this.bsr[i].applicationIdentifier.hasOwnProperty('start')) {
 				let s=this.bsr[i].applicationIdentifier.start;
 				let e=this.bsr[i].applicationIdentifier.end;
@@ -331,6 +334,7 @@ let app=Vue.createApp({
 			} else {
 	  			rv.push(this.bsr[i]);		
   			}
+			}
   		}
   		return rv;
   	},
